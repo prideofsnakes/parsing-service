@@ -1,0 +1,5 @@
+module:
+  integrations:
+    trustpilot:
+      client:
+        endpoint: https://www.trustpilot.com/review/
