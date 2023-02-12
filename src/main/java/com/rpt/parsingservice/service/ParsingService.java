@@ -1,7 +1,8 @@
 package com.rpt.parsingservice.service;
 
 import com.rpt.parsingservice.model.CountReviewRateResponse;
+import reactor.core.publisher.Mono;
 
 public interface ParsingService {
-    CountReviewRateResponse extractBusinessUnitInfo(String businessUnitName);
+    Mono<CountReviewRateResponse> extractBusinessUnitInfo(String businessUnitName);
 }
