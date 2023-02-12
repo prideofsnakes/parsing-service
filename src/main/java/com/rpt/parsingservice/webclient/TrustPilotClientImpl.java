@@ -2,10 +2,10 @@ package com.rpt.parsingservice.webclient;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.jsoup.nodes.Document;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
@@ -17,11 +17,15 @@ public class TrustPilotClientImpl implements TrustPilotClient {
     private final TrustPilotProps props;
 
     @Override
-    public Mono<Document> getBusinessUnitInfoWebPage(String businessUnitDomainName) {
-       return client.get()
-                .uri(props + businessUnitDomainName)
+    public Mono<String> getBusinessUnitInfoWebPage(String businessUnitDomainName) {
+        return client.get()
+                .uri(UriComponentsBuilder
+                        .fromUriString(props.getUrl())
+                        .path(props.getReviewEndpoint() + businessUnitDomainName)
+                        .build()
+                        .toUri())
                 .retrieve()
-                .bodyToMono(Document.class)
+                .bodyToMono(String.class)
                 .doOnError(WebClientResponseException.class, this::handleError);
     }
 

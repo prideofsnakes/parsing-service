@@ -2,4 +2,5 @@ module:
   integrations:
     trustpilot:
       client:
-        endpoint: https://www.trustpilot.com/review/
+        review-endpoint: 'review/'
+        url: 'https://www.trustpilot.com/'

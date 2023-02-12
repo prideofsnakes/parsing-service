@@ -4,6 +4,8 @@ import com.rpt.parsingservice.webclient.TrustPilotProps;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @EnableConfigurationProperties(TrustPilotProps.class)
@@ -11,7 +13,14 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class ParsingServiceConfig {
 
     @Bean
+    @Scope(value = "singleton")
     public WebClient client() {
-        return WebClient.builder().build();
+        final int size = 16 * 1024 * 1024;
+        final ExchangeStrategies strategies = ExchangeStrategies.builder()
+                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+                .build();
+        return WebClient.builder()
+                .exchangeStrategies(strategies)
+                .build();
     }
 }

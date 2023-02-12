@@ -14,9 +14,7 @@ public class ParsingServiceImpl implements ParsingService{
 
     @Override
     public Mono<CountReviewRateResponse> extractBusinessUnitInfo(String businessUnitName) {
-        client.getBusinessUnitInfoWebPage(businessUnitName)
-                .blockOptional()
-                .ifPresent(System.out::println);
-        return null;
+        return client.getBusinessUnitInfoWebPage(businessUnitName)
+                .map(page -> new CountReviewRateResponse(1L, 4.0));
     }
 }
