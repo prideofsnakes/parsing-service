@@ -1,6 +1,7 @@
 package com.rpt.parsingservice.service;
 
 import com.rpt.parsingservice.model.CountReviewRateResponse;
+import com.rpt.parsingservice.utils.WebPageMappingUtils;
 import com.rpt.parsingservice.webclient.TrustPilotClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,6 @@ public class ParsingServiceImpl implements ParsingService{
     @Override
     public Mono<CountReviewRateResponse> extractBusinessUnitInfo(String businessUnitName) {
         return client.getBusinessUnitInfoWebPage(businessUnitName)
-                .map(page -> new CountReviewRateResponse(1L, 4.0));
+                .map(WebPageMappingUtils::mapHtmlResponse);
     }
 }

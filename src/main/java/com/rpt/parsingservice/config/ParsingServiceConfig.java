@@ -15,9 +15,9 @@ public class ParsingServiceConfig {
     @Bean
     @Scope(value = "singleton")
     public WebClient client() {
-        final int size = 16 * 1024 * 1024;
+        final int memorySize = 16 * 1024 * 1024;
         final ExchangeStrategies strategies = ExchangeStrategies.builder()
-                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(size))
+                .codecs(codecs -> codecs.defaultCodecs().maxInMemorySize(memorySize))
                 .build();
         return WebClient.builder()
                 .exchangeStrategies(strategies)
